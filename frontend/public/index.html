@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tunebox</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="brand">Tunebox</div>
+    <nav aria-label="Library">
+      <button data-view="home" class="active">Discover</button>
+      <button data-view="favorites">Liked songs</button>
+    </nav>
+    <input id="search" type="search" placeholder="Search songs, artists, albums" aria-label="Search">
+    <button id="auth-btn" class="btn">Sign in</button>
+  </header>
+
+  <div class="layout">
+    <aside class="stage" aria-label="Now playing">
+      <div id="disc" class="disc"><div id="np-art" class="label"></div></div>
+      <h2 id="np-title">Nothing playing</h2>
+      <p id="np-artist" class="sub">Pick a song to start the record.</p>
+      <div class="progress"><span id="cur">0:00</span><div id="bar"><div id="fill"></div></div><span id="dur">0:00</span></div>
+      <div class="controls">
+        <button id="prev" class="ico" aria-label="Previous song">⏮</button>
+        <button id="toggle" class="ico big" aria-label="Play or pause">▶</button>
+        <button id="next" class="ico" aria-label="Next song">⏭</button>
+      </div>
+    </aside>
+
+    <section class="library">
+      <h1 id="banner-title">Discover</h1>
+      <div id="chips" class="chips" role="group" aria-label="Genres"></div>
+      <ol id="tracks" class="tracks"></ol>
+      <p id="empty" class="empty" hidden>No songs match. Clear the search or pick another genre.</p>
+    </section>
+  </div>
+
+  <dialog id="auth-dialog">
+    <form id="auth-form">
+      <h2 id="auth-heading">Sign in</h2>
+      <input id="email" type="email" placeholder="Email" required autocomplete="email">
+      <input id="password" type="password" placeholder="Password (min 8 characters)" required minlength="8" autocomplete="current-password">
+      <p id="auth-error" class="error" role="alert"></p>
+      <button class="btn primary" type="submit">Continue</button>
+      <button class="link" type="button" id="auth-toggle">New here? Create an account</button>
+      <button class="link" type="button" id="auth-cancel">Cancel</button>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
