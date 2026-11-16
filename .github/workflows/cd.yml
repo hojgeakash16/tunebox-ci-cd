@@ -1,0 +1,18 @@
+# This is the workflow for cd
+
+name: CD
+
+on:
+    workflow_dispatch
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: code checkout
+              uses: actions/checkout@v7
+
+            - name: run the container
+              run: docker compose up
+
+            
