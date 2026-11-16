@@ -1,0 +1,20 @@
+# To design the workflow for CI/CD pipeline for tunebox
+
+name: CI-CD
+
+on:
+    workflow_dispatch
+
+jobs:
+    code:
+        uses: ./.github/workflows/lint_and_test.yml
+
+    build-and-push-image:
+        needs: code
+        uses: ./.github/workflows/docker.yml
+        secrets: inherit
+
+    deploy:
+        needs: ["code", "build-and-push-image"]
+        uses: ./.github/workflows/cd.yml
+        secrets: inherit
