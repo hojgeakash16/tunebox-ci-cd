@@ -11,6 +11,10 @@ permissions:
 jobs:
     code-and-lint:
         runs-on: ubuntu-latest
+        defaults:
+            run:
+                working-directory: backend
+        
         steps:
             - name: code checkout
               uses: actions/checkout@v7
