@@ -1,0 +1,39 @@
+# This workflow is for pushing docker images to Dockerhub
+
+name: Docker Push
+
+on:
+    workflow_dispatch
+
+jobs:
+    docker-push:
+        runs-on: ubuntu-latest
+        steps:
+            - name: code checkout
+              uses: actions/checkout@v7
+
+            - name: Build the Docker setup
+              uses: docker/setup-docker-action@v5
+
+            - name: Docker Login
+              uses: docker/login-action@v4
+              with:
+                username: ${{ vars.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v4
+
+            - name: Push Frontend Image
+              uses: docker/build-push-action@v7
+              with:
+                context: ./frontend
+                push: true
+                tags: akashhojge/tunebox:frontend
+
+            - name: Push Backend Image
+              uses: docker/build-push-action@v7
+              with:
+                context: ./backend
+                push: true
+                tags: akashhojge/tunebox:backend
