@@ -28,6 +28,7 @@ jobs:
               uses: docker/build-push-action@v7
               with:
                 context: ./frontend
+                load: true
                 push: false
                 tags: ${{ vars.DOCKERHUB_USERNAME }}/tunebox-frontend:latest
 
@@ -35,6 +36,7 @@ jobs:
               uses: docker/build-push-action@v7
               with:
                 context: ./backend
+                load: true
                 push: false
                 tags: ${{ vars.DOCKERHUB_USERNAME }}/tunebox-backend:latest
 
