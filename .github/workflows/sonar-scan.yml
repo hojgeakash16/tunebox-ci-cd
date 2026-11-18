@@ -18,8 +18,8 @@ jobs:
               uses: SonarSource/sonarqube-scan-action@v8.2.1
               with:
                 args: >
-                    -Dsonar.projectKey=hojgeakash16_tunebox-ci-cd
-                    -Dsonar.organization=hojgeakash16
+                    -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
+                    -Dsonar.organization=${{ vars.SONAR_ORGANIZATION }}
                     -Dsonar.branch.name=${{ github.ref_name }}
               env:
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
