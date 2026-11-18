@@ -1,0 +1,43 @@
+# This is the workflow for scanning dependencies of tunein box app
+
+name: Dependency Scan
+
+on:
+    workflow_dispatch
+
+jobs:
+    dependency-scan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: code checkout
+              uses: actions/checkout@v7
+
+            - name: npm setup (backend)
+              uses: actions/setup-node@v4
+              with:
+                node-version: 22
+                cache: npm
+                cache-dependency-path: backend/package-lock.json
+            
+            - name: Install production dependencies
+              working-directory: backend
+              run: npm ci --omit=dev
+      
+            - name: Audit (fail on high or critical)
+              working-directory: backend
+              run: npm audit --omit=dev --audit-level=high
+
+            - name: Run Trivy vulnerability scanner in filesystem mode
+              uses: aquasecurity/trivy-action@0.29.0
+              with:
+                scan-type: 'fs'
+                scan-dir: './frontend'
+                format: 'table'
+                severity: 'CRITICAL,HIGH'
+                exit-code: '1'
+
+            - name: Upload Test results
+              uses: actions/upload-artifact@master
+              with:
+                name: Depcheck report
+                path: ${{github.workspace}}/reports
