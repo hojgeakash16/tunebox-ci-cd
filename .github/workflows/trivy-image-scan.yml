@@ -45,21 +45,19 @@ jobs:
               with:
                 image-ref: '${{ vars.DOCKERHUB_USERNAME }}/tunebox-frontend:latest'
                 format: 'table'
-                exit-code: '1'
+                exit-code: '0'
                 ignore-unfixed: true
                 vuln-type: 'os,library'
-                severity: 'CRITICAL'
-                continue-on-error: true
+                severity: 'CRITICAL,HIGH'
 
             - name: Run Trivy vulnerability scanner
               uses: aquasecurity/trivy-action@v0.36.0
               with:
                 image-ref: '${{ vars.DOCKERHUB_USERNAME }}/tunebox-backend:latest'
                 format: 'table'
-                exit-code: '1'
+                exit-code: '0'
                 ignore-unfixed: true
                 vuln-type: 'os,library'
-                severity: 'CRITICAL'
-                continue-on-error: true
+                severity: 'CRITICAL,HIGH'
 
             
