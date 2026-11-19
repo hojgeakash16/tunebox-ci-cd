@@ -12,6 +12,30 @@ jobs:
             - name: code checkout
               uses: actions/checkout@v7
 
+            - name: Start Application
+              run: |
+                docker compose up -d --build
+
+            - name: Check Docker Containers
+              run: |
+                docker compose ps
+
+            - name: Verify Application Health
+              run: |
+                for i in {1..30}; do
+                  if curl -fsS http://127.0.0.1:3000/; then
+                    echo "Application is healthy"
+                    exit 0
+                  fi
+
+                  echo "Waiting for application..."
+                  sleep 5
+                done
+
+                echo "Application failed to start"
+                docker compose logs
+                exit 1
+
             - name: ZAP Scan
               uses: zaproxy/action-baseline@v0.15.0
               with:
