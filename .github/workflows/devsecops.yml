@@ -5,6 +5,11 @@ name: Devsecops Pipeline
 on:
     workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+  security-events: write
+
 jobs:
     # Secret Scanning
     secret-scan:
