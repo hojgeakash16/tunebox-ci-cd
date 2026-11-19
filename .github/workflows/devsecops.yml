@@ -16,11 +16,6 @@ jobs:
         secrets: inherit
         uses: ./.github/workflows/secrets-scanning.yml
 
-    # Dependency Scanning
-    dependency-scan:
-        needs: secret-scan
-        uses: ./.github/workflows/dependency_scan.yml
-
     # Linting Test
     linting:
         needs: dependency-scan
@@ -31,6 +26,11 @@ jobs:
         needs: linting
         secrets: inherit
         uses: ./.github/workflows/sonar-scan.yml
+
+    # Dependency Scanning
+    dependency-scan:
+        needs: secret-scan
+        uses: ./.github/workflows/dependency_scan.yml
 
     # Image Build and Scanning
     build-and-scan:
