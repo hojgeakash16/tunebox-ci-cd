@@ -3,7 +3,7 @@
 name: SonarQube Scan
 
 on:
-    workflow_dispatch
+    workflow_call:
 
 jobs:
     sast-scan:

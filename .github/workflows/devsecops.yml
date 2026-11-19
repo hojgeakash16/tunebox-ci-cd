@@ -1,0 +1,55 @@
+# This is the devsecops workflow for CI/CD pipeline
+
+name: Devsecops Pipeline
+
+on:
+    workflow_dispatch:
+
+jobs:
+    # Secret Scanning
+    secret-scan:
+        secrets: inherit
+        uses: ./.github/workflows/secrets-scanning.yml
+
+    # Dependency Scanning
+    dependency-scan:
+        needs: secret-scan
+        uses: ./.github/workflows/dependency_scan.yml
+
+    # Linting Test
+    linting:
+        needs: dependency-scan
+        uses: ./.github/workflows/lint_and_test.yml
+
+    # SAST
+    sast:
+        needs: linting
+        secrets: inherit
+        uses: ./.github/workflows/sonar-scan.yml
+
+    # Image Build and Scanning
+    build-and-scan:
+        needs: sast
+        secrets: inherit
+        uses: ./.github/workflows/trivy-image-scan.yml
+
+    # Push the image
+    push:
+        needs: build-and-scan
+        secrets: inherit
+        uses: ./.github/workflows/push-docker-image.yml
+
+    # Deploying the image
+    deploy:
+        needs: push
+        secrets: inherit
+        uses: ./.github/workflows/cd.yml
+
+    # DAST scanning post deploy
+    dast:
+        needs: deploy
+        secrets: inherit
+        uses: ./.github/workflows/dast.yml
+
+    
+

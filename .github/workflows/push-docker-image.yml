@@ -3,7 +3,7 @@
 name: Docker Push
 
 on:
-    workflow_dispatch
+    workflow_call:
 
 jobs:
     docker-push:

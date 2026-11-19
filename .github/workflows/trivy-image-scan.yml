@@ -3,7 +3,7 @@
 name: Trivy Scan
 
 on:
-    workflow_dispatch
+    workflow_call:
 
 jobs:
     trivy-scan:
