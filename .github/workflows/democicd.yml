@@ -3,7 +3,7 @@
 name: Dummy CI-CD
 
 on:
-    workflow_dispatch
+    workflow_dispatch:
 
 jobs:
     code:
